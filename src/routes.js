@@ -10,26 +10,11 @@ export default function Routes() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTintColor: '#ffffff',
-        headerStyle: {
-          backgroundColor: '#7159c1',
-        },
-        headerBackTitleVisible: false,
-        headerTitleAlign: 'center',
+        headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{
-          title: 'Login',
-        }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{ title: 'Cadastro' }}
-      />
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
     </Stack.Navigator>
   );
 }
