@@ -12,8 +12,19 @@ import Profile from '~/pages/Profile';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function App() {
-  return (
+export default function Routes() {
+  const isSigned = useSelector((state) => state.auth.signed);
+
+  return !isSigned ? (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+    </Stack.Navigator>
+  ) : (
     <Tab.Navigator
       tabBarOptions={{
         keyboardHidesTabBar: true,
@@ -45,26 +56,5 @@ function App() {
         }}
       />
     </Tab.Navigator>
-  );
-}
-
-export default function Routes() {
-  const isSigned = useSelector((state) => state.auth.signed);
-
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      {!isSigned ? (
-        <>
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-        </>
-      ) : (
-        <Stack.Screen name="App" component={App} />
-      )}
-    </Stack.Navigator>
   );
 }
