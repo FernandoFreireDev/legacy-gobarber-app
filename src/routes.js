@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
@@ -8,9 +9,46 @@ import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 import Dashboard from '~/pages/Dashboard';
 import Profile from '~/pages/Profile';
+import SelectProvider from '~/pages/New/SelectProvider';
+import SelectDateTime from '~/pages/New/SelectDateTime';
+import Confirm from '~/pages/New/Confirm';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function New() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerTransparent: true,
+        headerTintColor: '#FFF',
+        headerLeftContainerStyle: {
+          marginLeft: 20,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="SelectProvider"
+        component={SelectProvider}
+        options={({ navigation }) => ({
+          title: 'Selecione o prestador',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Dashboard');
+              }}
+            >
+              <Icon name="chevron-left" size={20} color="#fff" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen name="SelectDateTime" component={SelectDateTime} />
+      <Stack.Screen name="Confirm" component={Confirm} />
+    </Stack.Navigator>
+  );
+}
 
 export default function Routes() {
   const isSigned = useSelector((state) => state.auth.signed);
@@ -43,6 +81,17 @@ export default function Routes() {
           tabBarIcon: ({ color }) => (
             <Icon name="event" size={20} color={color} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="New"
+        component={New}
+        options={{
+          tabBarLabel: 'Agendar',
+          tabBarIcon: ({ color }) => (
+            <Icon name="add-circle-outline" size={20} color={color} />
+          ),
+          tabBarVisible: false,
         }}
       />
       <Tab.Screen
